@@ -1,0 +1,8 @@
+      year           base      
+ Min.   :1900   T      :10239  
+ 1st Qu.:2011   I      : 6136  
+ Median :2014   A      :   34  
+ Mean   :2013   V      :    3  
+ 3rd Qu.:2016   K      :    1  
+ Max.   :2018   -      :    0  
+ NA's   :336    (Other):    0  

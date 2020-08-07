@@ -14,7 +14,7 @@ use Getopt::Long qw(:config no_ignore_case);
 use Term::Cap;
 use POSIX;
 ##############LOCAL CONFIGURATION##############
-my $mafft = '/usr/bin/mafft';
+my $mafft = '/anaconda2/bin/mafft';
 ###############################################
 my $prefix = int( rand(99999) );
 my %opts;

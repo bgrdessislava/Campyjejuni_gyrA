@@ -1,0 +1,12 @@
+#connecting to the linux account
+ssh spet4850@linux.ox.ac.uk
+
+#connecting to arcus-b
+ssh -X spet4850@arcus-b.arc.ox.ac.uk
+
+#Synching my files to ARC
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -w %h:%p"' CAMP*.xmfa spet4850@arcus-b.arc.ox.ac.uk:/home/spet4850/campy_analysis/Data/
+
+
+#catfasta combining the files
+../../code/catfasta2phyml.pl -f *fasta > concatinate.fasta

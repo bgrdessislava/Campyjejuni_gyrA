@@ -1,0 +1,9 @@
+../logs/mafft_2376521_371.err
+../logs/mafft_2376521_372.err
+../logs/mafft_2376521_42.err
+../logs/mafft_2376521_554.err
+../logs/mafft_2376521_7.err
+
+371,372,42,554,7
+
+ls -l ../data/CAMP*xmfa | sed -n 371p

@@ -1,0 +1,13 @@
+#Notes to concatinate files for each allele then separating them to 1343 alleles
+
+
+~/Documents/OneDrive\ -\ Nexus365/PhD/Campy_Analysis_ALL/Code/Non_r/split_camp_1343allele.py coreMLST1990_2018.xmfa
+
+git status
+git add Non_r/split_camp_1343allele.py
+git commit -m 'adding python code that splits the 1343 allele into separate files'
+git push
+
+~/Documents/OneDrive\ -\ Nexus365/PhD/Campy_Analysis_ALL/Code/Non_r/allele_alighnment.pl --align  --file CAMP0001.xmfa > CAMP0001_align.fasta
+
+conda install -c bioconda mafft

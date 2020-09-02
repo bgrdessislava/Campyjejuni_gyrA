@@ -1,0 +1,5 @@
+#Code that unzips gzip files in one go
+unzip *.zip
+
+#Slurm script that changes the amount of memory you can run
+#SBATCH --mem=5GB

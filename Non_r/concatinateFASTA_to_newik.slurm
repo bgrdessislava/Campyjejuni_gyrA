@@ -9,10 +9,9 @@
 #SBATCH --output=/data/zool-microbe-genomics/spet4850/campy_analysis/logs/concatinated1355_newik%j.out
 #SBATCH --error=/data/zool-microbe-genomics/spet4850/campy_analysis/logs/concatinated1355_newik%j.err
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=spet4850@spc.ox.ac.uk
+#SBATCH --mail-user=spet4850@ox.ac.uk
 
 module purge
-module load slurm
 module load fasttree/2.1.9
 
 

@@ -18,7 +18,7 @@ for (threshold in c(5,10,25,50,75,100,200,300,500)){
 
   # Only keep year_source within threshold
   data_subset = subset(long_list, long_list$year_source %in% keep$year_source)
-  nreps = 1000
+  nreps = 100
   for (toreplace in c(TRUE,FALSE)) {
     print(toreplace)
     for (rep in c(1:nreps)) {
@@ -33,22 +33,22 @@ for (threshold in c(5,10,25,50,75,100,200,300,500)){
         to_append = TRUE
         colnames = FALSE
       }
-      write.table(pos86_counts, paste(threshold,'_iteration_1000.txt',sep = ''), append = to_append, col.names = colnames, row.names = FALSE)
+      write.table(pos86_counts, paste(threshold,'_iteration_100.txt',sep = ''), append = to_append, col.names = colnames, row.names = FALSE)
     }
   }
 
-  all_data = read.table(paste(threshold,'_iteration_1000.txt',sep = ''),header = TRUE)
+  all_data = read.table(paste(threshold,'_iteration_100.txt',sep = ''),header = TRUE)
   all_data2 = all_data[all_data$base == 'I' | all_data$base == 'T',]
   # Sample year_source groups to same size
-  chicken_human_graph_threshold_5iteration_1000 <- ggplot(all_data2, aes(x = year, y = ID, colour = base)) + 
+  chicken_human_graph_threshold_5iteration_100 <- ggplot(all_data2, aes(x = year, y = ID, colour = base)) + 
     geom_point(aes(alpha = 0.0001)) +
     geom_smooth() +
     facet_wrap(replacement_condition~source, nrow = 2) +
     theme_pubr(legend = 'bottom')
 
-  chicken_human_graph_threshold_5iteration_1000
+  chicken_human_graph_threshold_5iteration_100
 }
-  #ggsave(paste(threshold,'_iteration_1000.png',sep = '-'))
+  #ggsave(paste(threshold,'_iteration_100.png',sep = '-'))
 #}
 
 
@@ -73,15 +73,14 @@ binary_list$binary = as.numeric(binary_list$binary)
 #model2 <- glm(binary_list$binary ~ binary_list$year + binary_list$binary,binomial)
 
 attach(binary_list)
-detach(binary_list)
+#detach(binary_list)
 modela <- glm(binary~year,binomial)
 xv <-seq(1970,2020,10)
 yv<- predict(modela,list(year=xv),type="response")
 plot(year,binary,pch=21,bg="yellow")
 lines(xv,yv,col="blue")
 
-
-
+summary(modela)
 
 
 ########################ggplot --> Not working 

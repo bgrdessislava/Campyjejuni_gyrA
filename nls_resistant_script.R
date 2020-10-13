@@ -7,8 +7,8 @@ library(segmented)
 #Made piece-wise and nls regression data
 
 setwd("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data")
-#Using the data that uses 200 isolates, 10000 iteration
-raw_data <- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/200-_iteration_10000.txt",sep="")
+#Using the data that uses 200 isolates, 1000 iteration
+raw_data <- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/200_iteration_1000.txt",sep="")
 raw_data = filter(raw_data, raw_data$base == 'I')
 raw_data = filter(raw_data, raw_data$source == 'human_stool')
 
@@ -27,17 +27,24 @@ plot(pseudo$x,pseudo$y)
 #linear model
 res_linear <- lm(pseudo$x~pseudo$y)
 
+summary(res_linear)
+
 #Linear regression data
-plot(pseudo$x, pseudo$y, pch = 16, cex = 1.3, col = "red", main = "Year vs resistant humanfaeces 200 isolates ", font.main = 1,cex.main = 1, xlab = "Year", ylab = "Isolates Count")
+plot(pseudo$x, pseudo$y, xpch = 16, cex = 1.3, col = "red", main = "Year vs resistant humanfaeces 200 isolates ", font.main = 1,cex.main = 1, xlab = "Year", ylab = "Isolates Count")
 
 abline(1993.6175,0.2459)
 abline(lm(pseudo$y~pseudo$x))
 
 
 lin.mod <- lm(y~x, data=pseudo)
+#Summary of the linear regression model
+summary(lin.mod)
+
 segmented.mod <- segmented(lin.mod, seg.Z = ~x, psi=2015)
 plot(pseudo$x,pseudo$y,pch=16, ylim=c(0,120))
 plot(segmented.mod, add=T)
+
+summary(lin.mod)
 
 
 
@@ -49,7 +56,8 @@ res <- nlsLM(y~b*(1-exp(-a*x)), data = pseudo, start = list(a = 0.01,b=100),cont
 
 # Print out the sumamry of the model fit
 summary(res)
-
+par(mfrow=c(2,2))
+plot(res)
 
 # Store the parameter estimate for a (in the y=1-exp(-a*x) equation):
 temp <- summary(res)[[11]]
@@ -64,4 +72,7 @@ genfitted <- b_est*(1-exp(-a_est*pseudo$x))
 
 o <- order(pseudo$x)
 lines(pseudo$x[o],genfitted[o], col="blue", lwd=2)
+
+summary(genfitted)
+anova(genfitted, lin.mod)
 

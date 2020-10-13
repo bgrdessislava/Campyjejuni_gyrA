@@ -15,7 +15,7 @@ usedAmino = {}
 nucleoCat = 0
 usedNucleo = {}
 
-print ('ID', 'Gene Name', 'Sequence', 'Nucleotide Categorical', 'AminoAcid', 'AminoAcid Categorical' sep = ',')
+print ('ID', 'Gene_Name', 'Sequence', 'Nucleotide_Categorical', 'AminoAcid', 'AminoAcid_Categorical', sep = ',')
 with fileinput.input(sys.argv[2:]) as f:
     for line in f:
         line = line.strip()
@@ -23,7 +23,13 @@ with fileinput.input(sys.argv[2:]) as f:
             try:
                 if header in ids:
                     phenotype = ids[header]
-                    protein = str(Seq(sequence).translate(table=11))
+                    try:
+                        protein = str(Seq(sequence).translate(table=11,gap='-'))
+                    except:
+                        sys.stderr.write(f'{fileinput.filename()},{header},{phenotype},{sequence}\n')
+                        header = line.strip('>')
+                        sequence = ''
+                        continue
                     if protein not in usedAmino:
                         usedAmino[protein] = aminoCat
                         aminoCat += 1
@@ -41,7 +47,10 @@ with fileinput.input(sys.argv[2:]) as f:
             sequence = line + sequence
     if header in ids:
         phenotype = ids[header]
-        protein = str(Seq(sequence).translate(table=11))
+        try:
+            protein = str(Seq(sequence).translate(table=11,gap='-'))
+        except:
+            sys.stderr.write(f'{fileinput.filename()},{header},{phenotype},{sequence}\n')
         if protein not in usedAmino:
             usedAmino[protein] = aminoCat
             aminoCat += 1

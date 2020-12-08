@@ -11,6 +11,10 @@ library(dplyr)
 setwd("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data")
 long_86_position<- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/long_list_86_position.csv")
 
+rMLST_resistance_year <- long_86_position[long_86_position$base == 'I' | long_86_position$base == 'T', 
+                                       c('year', 'base', 'rMLST')]
+write.csv(rMLST_resistance_year,file = "rMLST_resistance_frequency_df.csv")
+
 #######Year Resistance Starts HERE############################################
 #makes it into a table format
 year_resistance <-table(long_86_position$year,long_86_position$base)
@@ -25,6 +29,9 @@ year_resistance = data.frame(year_resistance)
 
 #dcast leads long to wide
 year_resistance = dcast(year_resistance, Var1 ~ Var2, value.var = "Freq")
+
+#Preparing df for the regression analysis
+write.csv(year_resistance, file = 'year_resistance_df.csv')
 #Choose all the year values
 rownames(year_resistance) = year_resistance[,1]
 #Gets rid of the first column
@@ -94,13 +101,26 @@ year_resistance3dmap
 #######ST_resistance Starts HERE#############################################
 #################################################################################
 ST_resistance <-table(long_86_position$ST,long_86_position$base)
-#CHooses only I and T
+#dataframe to do the year correlation
+ST_resistance_year <- long_86_position[long_86_position$base == 'I' | long_86_position$base == 'T', 
+                 c('year', 'base', 'ST')]
+write.csv(ST_resistance_year,file = "ST_resistance_frequency_df.csv")
+
+#Chooses only I and T
 ST_resistance <- ST_resistance[,c(2,4)]
 ST_resistance = ST_resistance[rowSums(ST_resistance) > 100,]
+#For year correlation Chooses only I and T
+ST_resistance_year <- ST_resistance_year[,c(2,4)]
+ST_resistance_year = ST_resistance[rowSums(ST_resistance) > 100,]
 
 #Makes it into a dataframe
 ST_resistance = data.frame(ST_resistance)
 ST_resistance = as.data.frame.matrix(ST_resistance) 
+
+#dataframe for year correlation
+ST_resistance_year = data.frame(ST_resistance_year)
+
+
 #dcast leads long to wide
 ST_resistance = dcast(ST_resistance, Var1 ~ Var2, value.var = "Freq")
 #Choose all the year values
@@ -125,6 +145,11 @@ ST_resistance3dmap
 #######Clonal Complex    Starts HERE#############################################
 #################################################################################
 clonalcomplex_resistance <-table(long_86_position$clonal_complex,long_86_position$base)
+
+#dataframe to do the year correlation
+CC_resistance_year <- long_86_position[long_86_position$base == 'I' | long_86_position$base == 'T', 
+                                       c('year', 'base', 'clonal_complex','source')]
+write.csv(CC_resistance_year,file = "CC_resistance_frequency_df.csv")
 
 #Choosing only I and T
 clonalcomplex_resistance <- clonalcomplex_resistance[,c(2,4)]
@@ -215,10 +240,12 @@ rMLST_resistance = rotate(rMLST_resistance)
 
 pheatmap(scale(rMLST_resistance))
 
-rMLST_resistance3dmap<- d3heatmap(scale(rMLST_resistance,center=FALSE), colors = "viridis", dendogram = 'row',
-                                     k_row = 2, # Number of groups in rows
-                                     k_col = 3 # Number of groups in columns
-)
+rMLST_resistance_SCALE <- scale(rMLST_resistance,center=FALSE)['T',]
+
+rMLST_resistance3dmap<- 
+  pheatmap(as.vector(scale(rMLST_resistance,center=FALSE)['T',]), 
+            colors = "viridis", cluster_rows = FALSE, cluster_cols = FALSE)
+                                     # Number of groups in columns
 
 rMLST_resistance3dmap
 

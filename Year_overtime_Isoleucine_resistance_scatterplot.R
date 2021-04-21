@@ -40,3 +40,4 @@ ggplot(year_df, aes(x=Year,y=I_normalised)) +
   geom_smooth(method=lm) +
   labs(title="Isoleucine point mutation changes over time using regression line",
      x="Year", y = "Isoleucine porportion") 
+

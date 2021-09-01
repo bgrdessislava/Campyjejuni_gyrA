@@ -8,6 +8,7 @@ library(pheatmap)
 library(dplyr)
 library(tidyverse)
 library(viridis)
+library(lme4)
 
 #Useful: Logistic regression overtime for the all the isolates overtime
 
@@ -37,10 +38,48 @@ modelb <- glm(year_df$binary ~ , family = binomial)
   
   modelData = data.frame('x' = xv, 'y' = yv)
   
-  logistic <- glm(binary ~ sex, data = year_df, family = "binomial")
+
+#Cleaning all the data so that they are in factors
+year_df$year <- as.factor(year_df$year)
+year_df$ST <- as.factor(year_df$ST)
+year_df$clonal_complex <- as.factor(year_df$clonal_complex)
+year_df$cgMLST.coli_jejuni. <- as.factor(year_df$cgMLST.coli_jejuni.)
+year_df$rMLST <- as.factor(year_df$rMLST)
+year_df$region <- as.factor(year_df$region)
+year_df$age_yr <- as.factor(year_df$age_yr)
+year_df$sex <- as.factor(year_df$sex)
+year_df$binary <- as.factor(year_df$binary)
+year_df$month <- as.factor(year_df$month)
+
+
+#removing all the columns that either have one value or not needed
+year_df_analysis <- year_df
+year_df_analysis <- subset(year_df_analysis, select = -X.2  )
+year_df_analysis <- subset(year_df_analysis, select = -X.1  )
+year_df_analysis <- subset(year_df_analysis, select = -X  )
+year_df_analysis <- subset(year_df_analysis, select = -ID  )
+year_df_analysis <- subset(year_df_analysis, select = -source  )
+year_df_analysis <- subset(year_df_analysis, select = -base  )
+year_df_analysis <- subset(year_df_analysis, select = -position  )
+year_df_analysis <- subset(year_df_analysis, select = -X  )
+
+year_df_analysis$month <- as.factor(year_df$month)
+
+logistic <- glm(binary ~ clonal_complex, data = year_df, family = "binomial")
+  
+
+
+
+
+logistic_all <- glm(binary ~ ., data = year_df, family = "binomial")
+
+logistic_all_summary <- summary(modela)
+  capture.output(logistic_all, file = summaryFile)
+  
+
   
   
-  
+year_df <- subset( year_df, select = -position )
   
   
   

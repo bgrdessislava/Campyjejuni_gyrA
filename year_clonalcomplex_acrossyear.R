@@ -12,7 +12,8 @@ library(RColorBrewer)
 library(viridis)
 library(viridisLite)
 
-
+#This code creates moderately useful data indicatin ghow the 4 different groups (resistant suscpetible)
+#Changes across time using bar plot and scatter plot 
 
 setwd("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data")
 #Getting the raw big database with all metadata, Skip allows you to skip the raws not needed

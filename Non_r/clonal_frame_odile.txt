@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#SBATCH --job-name=clonalframe_%j
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --time=0-14:00:00
+#SBATCH --chdir=/data/zool-microbe-genomics/spet4850/campy_analysis/data/CC353/
+#SBATCH --output=/data/zool-microbe-genomics/spet4850/campy_analysis/logs/clonalframe_%j.out
+#SBATCH --error=/data/zool-microbe-genomics/spet4850/campy_analysis/logs/clonalframe_%j.err
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=spet4850@spc.ox.ac.uk
+
+module load Anaconda3/2020.11
+
+source activate /data/zool-microbe-genomics/spet4850/clonalframe
+
+ClonalFrameML CC353_alignedto_coreMLST_OdileAdvice.fas.nwk CC353_aligned_coreMLST_OdileAdvice_core.fas odile_example.output -kappa 4.967695 -emsim 100 -ignore_user_sites odile.non-core-sites.txt

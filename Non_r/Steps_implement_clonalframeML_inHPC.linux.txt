@@ -1,0 +1,7 @@
+#Steps to get ClonalFrameML to work in HPC
+
+#First we need to see what version of Python we have
+module spider anaconda
+
+#Step 1 - Run the Python 3
+module load Anaconda3/2020.11 

@@ -1,0 +1,18 @@
+
+ssh spet4850@linux.ox.ac.uk
+#We say 'yes'
+ssh -X spet4850@arcus-b.arc.ox.ac.uk
+#Then I type my comments
+
+
+
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' CAMP*.xmfa spet4850@arcus-b.arc.ox.ac.uk:/home/spet4850/campy_analysis/Data/
+
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' spet4850@arcus-b.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/*.nwk .
+
+
+#Unzip the file and pick up the first 1000 isolates from the file
+zcat CAMP0950* |   awk "/^>/ {n++} n>1000 {exit} {print}"
+
+#Synching the cluster to my computer
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' spet4850@arcus-b.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/align/CAMP0950_subset1000.fasta-gtr_cat.nwk .

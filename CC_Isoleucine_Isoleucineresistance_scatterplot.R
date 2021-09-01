@@ -8,6 +8,9 @@ library(dplyr)
 library(tidyverse)
 library(viridis)
 
+#Heatmaps of 3 clusters illustraiting the overall resistance
+#geom smooth method illustrating the trend in resistance across time with log scale of change as well.
+
 setwd("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data")
 #Getting the raw big database with all metadata
 year_df<- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/10417_df_allMeta_toUSE.csv")

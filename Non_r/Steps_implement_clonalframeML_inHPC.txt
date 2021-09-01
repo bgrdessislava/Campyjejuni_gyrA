@@ -1,0 +1,17 @@
+#Steps to get ClonalFrameML to work in HPC
+
+#First we need to see what version of Python we have
+module spider anaconda
+
+#Step 1 - Run the Python 3 - conda environment allows you to download software
+module load Anaconda3/2020.11 
+
+#Step 2 - You need to create a virtual environment to download clonalframeML
+#Once the module is loaded you can use the conda commands to create a virtual 
+#environment in your $DATA area. For example to create an environment named 
+#"myenv" in $DATA we can use the following commands:
+export CONPREFIX=$DATA/clonalframe
+
+#creating an environment at $CONPREFIX  that includes my $DATA/clonalframe
+conda create --prefix $CONPREFIX --copy -c conda-forge -c bioconda -c defaults clonalframeml
+

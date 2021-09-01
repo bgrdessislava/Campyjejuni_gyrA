@@ -8,6 +8,8 @@ library(dplyr)
 library(tidyverse)
 setwd("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data")
 
+#Moderately useful - Isoleucine point mutation across time but just for geomsmooth and one graph
+
 year_df <- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/year_resistance_df.csv")
 year_df = year_df[,-1]
 
@@ -31,3 +33,4 @@ ggplot(year_df, aes(x=Year, y=I_normalised)) +
   geom_smooth() +
   labs(title="Isolecuine point mutation changes over time using loess method",
        x="Year", y = "Isoleucine porportion")
+

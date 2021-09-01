@@ -1,0 +1,4 @@
+FastTreeMP -gtr -nt  < BIGSdb_001134_9453768669_71083.fas > BIGSdb_001134_9453768669_71083.nwk
+ 
+ 
+FastTreeMP -gtr -nt  < CC353_alignedto11168.fas > CC353_alignedto11168.fas.nwk

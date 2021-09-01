@@ -9,6 +9,8 @@ library(dplyr)
 library(tidyverse)
 library(viridis)
 
+#Useful: Logistic regression overtime for the all the isolates overtime
+
 setwd("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data")
 #Getting the raw big database with all metadata
 year_df<- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/year_df_humanfecesONLY_ID.csv")
@@ -35,7 +37,7 @@ for (g in c(1,2,3)) {
   
   attach(year_df_g)
   
-  modela <- glm(binary~year,binomial)
+  modela <- glm(binary~year,family = binomial)
   xv <-seq(1970, 2020, 1)
   yv<- predict(modela,data.frame(year=xv),type="response")
   

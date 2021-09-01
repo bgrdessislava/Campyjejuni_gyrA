@@ -19,24 +19,13 @@ year_df<- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis
   
 year_df$binary <- ifelse(year_df$base == 'I',1,0)
 
-  
-attach(year_df)
-detach(year_df)
-  
 modela <- glm(year_df$binary ~ year_df$year,family = binomial)
 summary(modela)
   
-
-modelb <- glm(year_df$binary ~ , family = binomial)
   
   xv <-seq(1970, 2020, 1)
   yv<- predict(modela,data.frame(year=xv),type="response")
-  
-  s <- summary(modela)
-  summaryFile = paste("logic_regression-model-group", g,".txt", sep="")
-  capture.output(s, file = summaryFile)
-  
-  modelData = data.frame('x' = xv, 'y' = yv)
+
   
 
 #Cleaning all the data so that they are in factors
@@ -61,21 +50,21 @@ year_df_analysis <- subset(year_df_analysis, select = -ID  )
 year_df_analysis <- subset(year_df_analysis, select = -source  )
 year_df_analysis <- subset(year_df_analysis, select = -base  )
 year_df_analysis <- subset(year_df_analysis, select = -position  )
-year_df_analysis <- subset(year_df_analysis, select = -X  )
+year_df_analysis <- subset(year_df_analysis, select = -cgMLST.coli_jejuni.  )
+year_df_analysis <- subset(year_df_analysis, select = -rMLST)
 
-year_df_analysis$month <- as.factor(year_df$month)
+#Making sure we do not have any empty strings
+year_df_analysis[year_df_analysis == "?"] <- NA
+year_df_analysis[year_df_analysis == ""] <- NA
 
-logistic <- glm(binary ~ clonal_complex, data = year_df, family = "binomial")
-  
+logistic <- glm(binary ~ clonal_complex, data = year_df_analysis, family = "binomial")
+logistic_CC_summary_table <- summary.glm(logistic)$coefficient
+write.csv(logistic_CC_summary_table,"Summary_table_CC.csv")
 
 
-
-
-logistic_all <- glm(binary ~ ., data = year_df, family = "binomial")
-
-logistic_all_summary <- summary(modela)
-  capture.output(logistic_all, file = summaryFile)
-  
+logistic_all <- glm(binary ~ ., data = year_df_analysis, family = "binomial")
+logistic_all_summary <- summary.glm(logistic_all)$coefficient
+write.csv(logistic_all_summary,"Summary_tabl_all.csv")
 
   
   

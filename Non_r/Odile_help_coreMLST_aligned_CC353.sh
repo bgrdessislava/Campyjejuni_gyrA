@@ -14,4 +14,4 @@
 
 module load FastTree/2.1.11-GCCcore-9.3.0
 
-FastTree -gtr -nt  < CC353_alignedto_coreMLST.fas > CC353_alignedto_coreMLST.fas.nwk
+FastTree -gtr -nt  < CC353_aligned_coreMLST_OdileAdvice_core.fas > CC353_alignedto_coreMLST_OdileAdvice.fas.nwk

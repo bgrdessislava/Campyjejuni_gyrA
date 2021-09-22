@@ -29,7 +29,7 @@ a = year_df %>%
 
 #Choosing samples which the total is 10 
 a = filter(a, total >= 10)
-#Choosing clonal complex which has at least 5 
+#Choosing ST  which has at least 5 
 ST_count = a %>% 
   group_by(ST) %>%
   summarise('total_ST' = length(total)) %>%

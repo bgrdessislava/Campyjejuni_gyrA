@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --time=1-0:00:00
+#SBATCH --time=0-14:00:00
 #SBATCH --chdir=/data/zool-microbe-genomics/spet4850/campy_analysis/ClonalFrameML2/
 #SBATCH --output=/data/zool-microbe-genomics/spet4850/campy_analysis/logs/fasttree_%j.out
 #SBATCH --error=/data/zool-microbe-genomics/spet4850/campy_analysis/logs/fasttree_%j.err

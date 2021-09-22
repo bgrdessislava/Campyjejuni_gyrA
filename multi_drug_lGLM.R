@@ -11,7 +11,7 @@ library(lme4)
 
 setwd("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data")
 #Getting the raw big database with all metadata
-year_df<- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/CC353_481_df_allMeta_toUSE.csv")
+year_df<- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/CleanMeta_for_Tableau_resistantcleaned_10362.csv")
 
 #Taking the first column which is not needed
 #year_df = year_df[,-1]
@@ -26,11 +26,19 @@ year_df = year_df %>%
 
 #adding binary column
 year_df$binary = ifelse(year_df$Gyrase_DessyPipeline == 'I', 1, 0)
+year_df$tetO =  ifelse(year_df$tetracycline_genotypes_2_AlisonPipeline == 'tetO', 1, 0)
+year_df$multidrug = year_df$binary * year_df$tetO
 
 #basic lm 
-res=glm(year_df$binary~year_df$year,family=binomial)
+res=glm(year_df$multidrug~year_df$year,family=binomial)
 #it does show that year do have significant relationship with resistance change
 summary(res)
+
+#basic lm tetO
+res_tetO=glm(year_df$tetO~year_df$year,family=binomial)
+#it does show that year do have significant relationship with resistance change
+summary(res_tetO)
+plot(res_tetO)
 
 #ordered the year and add a line across the year and binary 
 o=order(year_df$year)
@@ -38,12 +46,12 @@ plot(year_df$year,year_df$binary,ylab="Resistance",xlab="Year",bty="l")
 lines(year_df$year[o],res$fitted[o],lwd=2,col="red")
 
 #residual plot do show linear relation
-plot(res, which = 1) 
+plot(res_tetO, which = 1) 
 #qq plot showing it is not forming normal distribution which is true
-plot(res, which = 2)
+plot(res_tetO, which = 2)
 
 #Tried to do boxplot but too many clonal-complex maybe should try to work on the main 18 clonal complex
-boxplot(year_df$binary ~ year_df$ST..MLST., data = year_df) 
+boxplot(year_df$tetO ~ year_df$clonal_complex, data = year_df) 
 
 # Smoothing function with different behaviour in the different plot panels
 mysmooth <- function(formula,data,...){
@@ -53,40 +61,35 @@ mysmooth <- function(formula,data,...){
   eval.parent(x)
 }
 
-
-
-year_df <- year_df %>% group_by(ST..MLST.) %>% filter(n() >= 10)
-
-#CC overtime
-split_plot <- ggplot(aes(year_df$year, year_df$binary), data = year_df) + 
-  geom_point() + 
+year_df <- year_df %>% group_by(clonal_complex..MLST.) %>% filter(n() >= 10)
+#CC overtime multidrug
+split_plot <- ggplot(aes(year_df$year, year_df$multidrug), data = year_df) + 
+  geom_point(alpha = 0.4) + 
   geom_smooth(method = glm, method.args = c(family=binomial)) +
-  facet_wrap(~ year_df$ST..MLST.) + # create a facet for each mountain range
-  xlab("year") + 
-  ylab("resistance") +
-  xlim(1997,2018) +
-  ylim(0,1) + 
+  facet_wrap(~ year_df$clonal_complex..MLST.) + # create a facet for each mountain range
+  xlab("Year") + 
   geom_vline(aes(xintercept = 2006),colour="red", linetype = "longdash") +
-  ggtitle("CC353 Resistance over ST types") +
+  ylab("Resistance") +
+  xlim(1997,2018) +
+  ylim(0,1) +
+  ggtitle("Multidrug Resistance over Clonal-complex") +
   theme(plot.title = element_text(lineheight=.8, face="bold",hjust = 0.5))
 
 split_plot
 
-ggsave("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Figures/Scatterplot/binary_CC_353STtype.png", plot=split_plot,dpi = 600)
+ggsave("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Figures/Scatterplot/MultieRes_CC_year.png",plot=split_plot, width = 50, height = 30, units = "cm",dpi = 600)
 
 #ST overtime
-split_plot_sample <- ggplot(aes(year_df$year, year_df$binary), data = year_df) + 
+split_plot_ST <- ggplot(aes(year_df$year, year_df$binary), data = year_df) + 
   geom_point() + 
   geom_smooth(method = glm, method.args = c(family=binomial)) +
-  facet_wrap(~ year_df$month) + # create a facet for each mountain range
-  xlab("month") + 
-  ylab("resistance") +
-  ggtitle("CC353 Resistance or suseptible over month")
-  
+  facet_wrap(~ year_df$ST..MLST.) + # create a facet for each mountain range +
+  geom_vline(aes(xintercept = 2006),colour="red", linetype = "longdash") +
+  xlab("length") + 
+  ylab("test score")
 
-split_plot_sample 
+split_plot_ST 
 #split_plot_ST dont run too many
-ggsave("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Figures/Scatterplot/binary_CC_353month.png",plot=split_plot_sample,dpi = 600)
 
 
 #clonal_complex each of them shown as whether it is significant or not CC

@@ -53,13 +53,19 @@ mysmooth <- function(formula,data,...){
   eval.parent(x)
 }
 
+year_df <- year_df %>% group_by(clonal_complex..MLST.) %>% filter(n() >= 10)
 #CC overtime
 split_plot <- ggplot(aes(year_df$year, year_df$binary), data = year_df) + 
-    geom_point() + 
+    geom_point(alpha = 0.4) + 
     geom_smooth(method = glm, method.args = c(family=binomial)) +
     facet_wrap(~ year_df$clonal_complex..MLST.) + # create a facet for each mountain range
-    xlab("length") + 
-    ylab("test score")
+    xlab("Year") + 
+    geom_vline(aes(xintercept = 2006),colour="red", linetype = "longdash") +
+    ylab("Resistance") +
+    xlim(1997,2018) +
+    ylim(0,1) +
+    ggtitle("Fluoroquinolone Resistance over Clonal-complex") +
+    theme(plot.title = element_text(lineheight=.8, face="bold",hjust = 0.5))
 
 split_plot
 
@@ -69,10 +75,12 @@ ggsave("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Figures
 split_plot_ST <- ggplot(aes(year_df$year, year_df$binary), data = year_df) + 
   geom_point() + 
   geom_smooth(method = glm, method.args = c(family=binomial)) +
-  facet_wrap(~ year_df$ST..MLST.) + # create a facet for each mountain range
+  facet_wrap(~ year_df$ST..MLST.) + # create a facet for each mountain range +
+  geom_vline(aes(xintercept = 2006),colour="red", linetype = "longdash") +
   xlab("length") + 
   ylab("test score")
 
+split_plot_ST 
 #split_plot_ST dont run too many
 
 

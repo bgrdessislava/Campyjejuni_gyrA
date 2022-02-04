@@ -52,5 +52,7 @@ plot_ST <-
        x ="Year", y = "Log scale proportion") +
   theme(plot.title = element_text(lineheight=.8, face="bold",hjust = 0.5))
 
+
+plot_ST
 ggsave("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Figures/Scatterplot/plot_ST.png",plot=plot_ST, width = 40, height = 25, units = "cm")
 

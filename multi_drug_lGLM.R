@@ -42,16 +42,16 @@ plot(res_tetO)
 
 #ordered the year and add a line across the year and binary 
 o=order(year_df$year)
-plot(year_df$year,year_df$binary,ylab="Resistance",xlab="Year",bty="l")
+plot(year_df$year,year_df$multidrug,ylab="Resistance",xlab="Year",bty="l")
 lines(year_df$year[o],res$fitted[o],lwd=2,col="red")
 
 #residual plot do show linear relation
-plot(res_tetO, which = 1) 
+plot(res, which = 1) 
 #qq plot showing it is not forming normal distribution which is true
-plot(res_tetO, which = 2)
+plot(res, which = 2)
 
 #Tried to do boxplot but too many clonal-complex maybe should try to work on the main 18 clonal complex
-boxplot(year_df$tetO ~ year_df$clonal_complex, data = year_df) 
+boxplot(year_df$multidrug ~ year_df$clonal_complex, data = year_df) 
 
 # Smoothing function with different behaviour in the different plot panels
 mysmooth <- function(formula,data,...){

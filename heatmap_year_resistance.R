@@ -19,8 +19,7 @@ all_data2 = all_data[all_data$base == 'I' | all_data$base == 'T',]
 chicken_human_graph_threshold_10_iteration_100000 <- ggplot(all_data2, aes(x = year, y = ID, colour = base, fill = base)) + 
   geom_point(alpha = 0.005) +
   geom_smooth() +
-  facet_wrap(~source, nrow = 2) +
-  theme_pubr(legend = 'bottom')
+  facet_wrap(~source, nrow = 2) 
 
 chicken_human_graph_threshold_10_iteration_100000
 

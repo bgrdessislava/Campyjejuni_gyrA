@@ -45,7 +45,6 @@ CC_count = a %>%
 
 #layering the ST_count with at least 5 in the initial filter of a with total equalling 10
 a = filter(a, clonal_complex %in% CC_count$clonal_complex)
-a = filter(a, clonal_complex %in% CC_count$clonal_complex)
 
 
 write.csv(a, file = "/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/clonal_year_proportion_df.csv")
@@ -68,7 +67,6 @@ plot_CC <-
   facet_wrap(~clonal_complex) +
   xlim(1997,2018) +
   ylim(0,1) + 
-  scale_color_viridis() +
   geom_vline(xintercept = 2006,colour="red", linetype = "longdash") +
   labs(title="Resistance isolates (Isoleucine) changes in human stool samples overtime in CC Scheme (4 locis out of 7 MLST same).\nRed line shows when the growth promoting antibiotic were banned in 2006 in the UK",
        x ="Year", y = "Log scale proportion") +
@@ -105,11 +103,10 @@ plot_CC <-
   scale_color_viridis() +
   geom_smooth(aes(group = clonal_complex), method = lm, 
               se=FALSE, color="black", formula = y ~ x) +
-  geom_text(x = 25, y = 300, label = lm_eq(df), parse = TRUE) +
   labs(title="Resistance isolates (Isoleucine) changes in human stool samples overtime in CC Scheme (4 locis out of 7 MLST same).\nRed line shows when the growth promoting antibiotic were banned in 2006 in the UK",
        x ="Year", y = "Log scale proportion") +
   theme(plot.title = element_text(lineheight=.8, face="bold",hjust = 0.5))
-
+#geom_text(x = 25, y = 300, label = lm_eq(df), parse = TRUE) +
 plot_CC
 
 ggsave("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Figures/Scatterplot/plot_CC_linearregression.png",plot=plot_CC, width = 50, height = 30, units = "cm",dpi = 600)

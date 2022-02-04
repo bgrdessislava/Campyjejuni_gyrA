@@ -29,7 +29,7 @@ year_df$binary = ifelse(year_df$Gyrase_DessyPipeline == 'I', 1, 0)
 year_df$tetO =  ifelse(year_df$tetracycline_genotypes_2_AlisonPipeline == 'tetO', 1, 0)
 
 #basic lm 
-res=glm(year_df$binary~year_df$year,family=binomial)
+res=glm(year_df$tetO~year_df$year,family=binomial)
 #it does show that year do have significant relationship with resistance change
 summary(res)
 
@@ -41,7 +41,7 @@ plot(res_tetO)
 
 #ordered the year and add a line across the year and binary 
 o=order(year_df$year)
-plot(year_df$year,year_df$binary,ylab="Resistance",xlab="Year",bty="l")
+plot(year_df$year,year_df$tetO,ylab="Resistance",xlab="Year",bty="l")
 lines(year_df$year[o],res$fitted[o],lwd=2,col="red")
 
 #residual plot do show linear relation

@@ -48,11 +48,13 @@ year_df_melt[is.na(year_df_melt)] = 0
 
 
 #Adding the three groups all the other will be group 4
-group1 = c('ST-354 complex','ST-464 complex')
+group1 = c('ST-354 complex','ST-464 complex','ST-353 complex')
 group2 = c('ST-48 complex','ST-45 complex',
            'ST-61 complex','ST-42 complex','ST-22 complex',
            'ST-283 complex')
-group3 = c('ST-353 complex')
+group3 = c('ST443 complex','ST21 complex','ST-574 complex',
+           'ST-206 complex','ST-658 complex','ST-257 complex',
+           'ST-52 complex')
 
 year_df_melt$group = ifelse(year_df_melt$clonal_complex %in% group1, 1, 
                        ifelse(year_df_melt$clonal_complex %in% group2, 2, 

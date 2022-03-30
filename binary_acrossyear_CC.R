@@ -107,18 +107,21 @@ res=glm(binary~year + factor(trend_group),family=binomial,data = year_df)
 #it does show that year do have significant relationship with resistance change
 summary(res)
 
-res=glm(binary~year + factor(trend_group),family=binomial,data = year_df)
+res=glm(binary~year * factor(trend_group),family=binomial,data = year_df)
 summary(res)
 
 #Making prediction for future
 #Creating a data frame
-variable_years<-data.frame(year_normalised=seq(0,40,1))
+variable_years<-data.frame(year_normalised=seq(0,43,1))
 
 
 #trend for group 1
 res_1=glm(binary~year_normalised,family=binomial,data = year_df%>% filter(trend_group == 1))
 summary(res_1)
 anova(res_1, test = 'Chi')
+
+exp(confint(res_1))
+
 
 preds = predict(res_1, newdata=variable_years, type = "link", se.fit = TRUE)
 critval <- 1.96 ## approx 95% CI
@@ -139,18 +142,20 @@ trend_1 = ggplot(data = year_df%>% filter(trend_group == 1))  +
   geom_line(data = predicted_res, aes(x = year, y = predicted)) +
   geom_line(data=predicted_res, mapping=aes(x=year, y=upr), col="red") + 
   geom_line(data=predicted_res, mapping=aes(x=year, y=lwr), col="red") +
-  ggtitle('Prediction of group1, ST-464 complex')+
+  ggtitle('Group1 CC464')+
   ylab('Resistance') +
-  xlab('Year') +
+  xlab('') +
   theme(plot.title = element_text(hjust = 0.5)) +
-  scale_x_continuous(breaks=seq(1997, 2040, 3))
+  scale_x_continuous(breaks=seq(1997, 2040, 5)) 
 
 trend_1 
+ggsave("../Figures/trend_1.png",dpi = 300)
 
 #I can also try to see the trend for each of the groups - group 2
 res_2=glm(binary~year_normalised,family=binomial,data = year_df%>% filter(trend_group == 2))
 summary(res_2)
 anova(res_2, test = 'Chi')
+#The odds of being resistance increases by odds 21% each year , p-value and confidence interval
 
 preds = predict(res_2, newdata=variable_years, type = "link", se.fit = TRUE)
 critval <- 1.96 ## approx 95% CI
@@ -171,15 +176,18 @@ trend_2 = ggplot(data = year_df%>% filter(trend_group == 2))  +
   geom_line(data = predicted_res, aes(x = year, y = predicted)) +
   geom_line(data=predicted_res, mapping=aes(x=year, y=upr), col="red") + 
   geom_line(data=predicted_res, mapping=aes(x=year, y=lwr), col="red") +
-  ggtitle('Prediction of group2, ST-354 complex, ST-353 complex')+
-  ylab('Resistance') +
-  xlab('Year') +
+  ggtitle('Group2 CC354,353')+
+  ylab('') +
+  xlab('') +
   theme(plot.title = element_text(hjust = 0.5)) +
-  scale_x_continuous(breaks=seq(1997, 2040, 3))
+  scale_x_continuous(breaks=seq(1997, 2040, 5))
 
 trend_2
 
 
+ggsave("../Figures/trend_2.png",dpi = 300)
+exp(confint(res_2))
+exp(confint(res_1))
 #trend for group 4
 res_4=glm(binary~year_normalised,family=binomial,data = year_df%>% filter(trend_group == 4))
 summary(res_4)
@@ -204,13 +212,14 @@ trend_4 = ggplot(data = year_df%>% filter(trend_group == 4))  +
   geom_line(data = predicted_res, aes(x = year, y = predicted)) +
   geom_line(data=predicted_res, mapping=aes(x=year, y=upr), col="red") + 
   geom_line(data=predicted_res, mapping=aes(x=year, y=lwr), col="red") +
-  ggtitle('Prediction of group 4, ST-21 complex, ST-574 complex,ST-658 complex, ST-257 complex')+
+  ggtitle('Group4 CC21,574,658,257')+
   ylab('Resistance') +
-  xlab('Year') +
+  xlab('') +
   theme(plot.title = element_text(hjust = 0.5)) +
-  scale_x_continuous(breaks=seq(1997, 2040, 3))
+  scale_x_continuous(breaks=seq(1997, 2040, 5))
 
 trend_4 
+ggsave("../Figures/trend_4.png",dpi = 300)
 
 
 #trend for group 3
@@ -238,13 +247,14 @@ trend_3 = ggplot(data = year_df%>% filter(trend_group == 3))  +
   geom_line(data = predicted_res, aes(x = year, y = predicted)) +
   geom_line(data=predicted_res, mapping=aes(x=year, y=upr), col="red") + 
   geom_line(data=predicted_res, mapping=aes(x=year, y=lwr), col="red") +
-  ggtitle('Prediction of group 3, ST-443 complex,ST-52 complex')+
-  ylab('Resistance') +
-  xlab('Year') +
+  ggtitle('Group3 CC443,52')+
+  ylab('') +
+  xlab('') +
   theme(plot.title = element_text(hjust = 0.5)) +
-  scale_x_continuous(breaks=seq(1997, 2040, 3))
+  scale_x_continuous(breaks=seq(1997, 2040, 5))
 
 trend_3
+ggsave("../Figures/trend_3.png",dpi = 300)
 
 #trend for group 5
 res_5=glm(binary~year_normalised,family=binomial,data = year_df%>% filter(trend_group == 5))
@@ -270,13 +280,14 @@ trend_5 = ggplot(data = year_df%>% filter(trend_group == 5))  +
   geom_line(data = predicted_res, aes(x = year, y = predicted)) +
   geom_line(data=predicted_res, mapping=aes(x=year, y=upr), col="red") + 
   geom_line(data=predicted_res, mapping=aes(x=year, y=lwr), col="red") +
-  ggtitle('Prediction of group 5, ST-45 complex , ST-61 complex, ST-42 complex, ST-22 complex,ST-283 complex')+
-  ylab('Resistance') +
+  ggtitle('Group5 CC45,61,42,22,283')+
+  ylab('') +
   xlab('Year') +
   theme(plot.title = element_text(hjust = 0.5)) +
-  scale_x_continuous(breaks=seq(1997, 2040, 3))
+  scale_x_continuous(breaks=seq(1997, 2040, 5))
 
 trend_5
+ggsave("../Figures/trend_5.png",dpi = 300)
 
 #trend for group 6
 res_6=glm(binary~year_normalised,family=binomial,data = year_df%>% filter(trend_group == 6))
@@ -299,17 +310,18 @@ predict_res = as.data.frame(predict(res_6,newdata = variable_years, type = "resp
 predicted_res = cbind(predict_res,variable_years)
 predicted_res$year = predicted_res$year_normalised + min(year_df$year)
 trend_6 = ggplot(data = year_df%>% filter(trend_group == 6))  + 
-  geom_point(aes(x = year, y = binary)) +
+  geom_point(aes(x = year, y = binary), alpha = 0.5) +
   geom_line(data = predicted_res, aes(x = year, y = predicted)) +
   geom_line(data=predicted_res, mapping=aes(x=year, y=upr), col="red") + 
   geom_line(data=predicted_res, mapping=aes(x=year, y=lwr), col="red") +
-  ggtitle('Prediction of group 6, ST-206 complex, ST-48 complex')+
-  ylab('Resistance') +
-  xlab('Year') +
+  ggtitle('Group6 CC206,48')+
+  ylab('') +
+  xlab('') +
   theme(plot.title = element_text(hjust = 0.5)) +
-  scale_x_continuous(breaks=seq(1997, 2040, 3))
+  scale_x_continuous(breaks=seq(1997, 2040, 5))
 
 trend_6
+ggsave("../Figures/trend_6.png",dpi = 300)
 #writing up
 # As year increases by  1, the odds of being resistant increases by exp(0.0727)
 #Time was significantly associated with being resistant, (estimate = exp(0.0727),95% confidence interval = 

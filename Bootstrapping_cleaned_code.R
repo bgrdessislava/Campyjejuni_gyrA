@@ -20,11 +20,18 @@ long_list_revisited <- long_list %>%
   group_by(year) %>%
   summarise(resistance_count = n())
 
-ggplot(aes(year, resistance_count), data = long_list_revisited) +
-         geom_point() +
-  ggtitle('Resistant isolates across time without bootstrapping') +
-  labs(y = "Resistant isolate count", x = "Year") +
-  theme(plot.title = element_text(hjust = 0.5))
+without_bootstrap = ggplot(aes(year, resistance_count), data = long_list_revisited) +
+         geom_point(size = 5) +
+  ggtitle('A) Resistant isolates across time without bootstrapping') +
+  labs(y = "Resistant isolate count", x = "") +
+  theme(plot.title = element_text(hjust = 0.5),panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),text = element_text(size = 15)) +
+        scale_x_continuous(breaks=seq(1997, 2018, 3))
+
+without_bootstrap
+
+ggsave("../Figures/withoutbootsrap.png",dpi = 300)
 
 tmp <- long_list %>% 
   filter(source == 'human_stool') %>%
@@ -33,14 +40,19 @@ tmp <- long_list %>%
   group_by(year, base) %>%
   summarise(count = n())
 
-ggplot(tmp, aes(fill=base, y=count, x=year)) +
+proportion_resistance = ggplot(tmp, aes(fill=base, y=count, x=year)) +
   geom_bar(position='stack', stat='identity') +
-  ggtitle('Proportion of resistance and suscpetoble isolates') +
-  labs(y = "Count", x = "Year") +
+  ggtitle('B) Resistant and Suscpetible Isolate Count') +
+  labs(y = "Count", x = "") +
   theme(plot.title = element_text(hjust = 0.5)) +
   scale_fill_discrete(name = "Fluoroquinolone Resistance", labels = c("Resistant", "Susceptible")) +
-  theme(legend.position="top") +
-  scale_x_continuous(breaks=seq(1997, 2018, 2))
+  theme(legend.position="top", panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+  panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15)) +
+  scale_x_continuous(breaks=seq(1997, 2018, 3))
+
+proportion_resistance
+ggsave("../Figures/proportion_resistance.png",dpi = 300)
+
 #bootsrapping starting
 
 for (threshold in c(50,100)){
@@ -74,22 +86,20 @@ for (threshold in c(50,100)){
   all_data2 = all_data[all_data$base == 'I',]
   all_data2 = all_data2[all_data2$source == 'human_stool',]
   # Sample year_source groups to same size
-  chicken_human_graph <- ggplot(all_data2, aes(x = year, y = ID, alpha = 0.1)) + 
+  human_graph <- ggplot(all_data2, aes(x = year, y = ID, alpha = 0.1)) + 
     geom_point() +
     geom_smooth(method='lm') +
-    labs(title="Percentage gyrA-ThR86Ile across time",
-         x="Years", y = "Percentage ") +
+    labs(title="C) Percentage gyrA-ThR86Ile across time",
+         x= "", y = "Percentage ") +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15)) +
           scale_y_continuous(name="Percentage", limits=c(0, 70),breaks = seq(0,70,10)) +
-          scale_x_continuous(name="Year", limits=c(1998, 2018),breaks = seq(1998,2018,1)) +
-          theme(plot.title = element_text(hjust = 0.5))
-    #expand_limits(x=c(1997,2018), y=c(0, 70)) 
-  
-  #theme_pubr(legend = 'bottom')
-  
-  chicken_human_graph 
+          scale_x_continuous(name="", limits=c(1997, 2018),breaks = seq(1997,2018,3)) +
+          theme(plot.title = element_text(hjust = 0.4, size = 18),
+                legend.key.size = unit(2, 'mm'),legend.position = "none")
+  human_graph 
 }
+human_graph 
 
 #ggsave(paste(threshold,'_iteration_100.png',sep = '-'))
 #}

@@ -52,6 +52,7 @@ variable_years<-data.frame(year_normalised=seq(0,40,1))
 res_total=glm(binary~year_normalised,family=binomial,data = year_df)
 summary(res_total)
 anova(res_total, test = 'Chi')
+exp(confint(res_total))
 
 preds = predict(res_total, newdata=variable_years, type = "link", se.fit = TRUE)
 critval <- 1.96 ## approx 95% CI
@@ -72,10 +73,14 @@ trend_total = ggplot(data = year_df)  +
   geom_line(data = predicted_res, aes(x = year, y = predicted)) +
   geom_line(data=predicted_res, mapping=aes(x=year, y=upr), col="red") + 
   geom_line(data=predicted_res, mapping=aes(x=year, y=lwr), col="red") +
-  ggtitle('Prediction of all isolates in the future')+
-  ylab('Resistance') +
-  xlab('Year') +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle('D) Prediction of all isolates in the future')+
+  ylab('Proportion of resistance') + xlab('') +
+  theme(plot.title = element_text(hjust = 0.5),panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),text = element_text(size = 15)) +
   scale_x_continuous(breaks=seq(1997, 2040, 5))
 
 trend_total
+
+ggsave("../Figures/prediction_allisolates.png",dpi = 300)
+

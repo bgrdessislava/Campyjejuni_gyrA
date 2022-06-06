@@ -21,7 +21,9 @@ year_df = year_df[,-1]
 #Only picking human stool
 year_df = year_df %>%
   filter(source == 'human_stool')%>% 
-  filter(base == 'I' | base == 'T')
+  filter(base == 'I' | base == 'T') %>%
+  filter(!is.na(year)) %>% 
+  mutate(clonal_complex = ifelse(as.character(clonal_complex) == "", "NA", as.character(clonal_complex)))
 
 write.csv(year_df, file = "/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/year_df_humanfecesONLY_ID.csv")
 
@@ -85,12 +87,12 @@ data_wide$clonal_complex <- NULL
 
 heatmap_CC <- pheatmap(data_wide, scale = "none", cluster_rows = TRUE, cluster_cols = FALSE,
          color = viridis(10),
-         main = "Isoleucine resistance across time in clonal-complex (4 loci same in 7 MLST scheme)",
-         fontsize=15,na_col = "white")
+         fontsize=15,na_col = "white",
+         legend_breaks = 0:1, legend_labels = c("0-suscpetible","1-resistant"))
 
 heatmap_CC
 
-ggsave("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Figures/Heatmaps/heatmap_CC.png",plot=heatmap_CC, width = 50, height = 30, units = "cm",dpi = 600)
+ggsave("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Figures/Heatmaps/heatmap_CC_cleaned.png",plot=heatmap_CC, width = 50, height = 30, units = "cm",dpi = 600)
 
 
 #Trying out to put linear regression

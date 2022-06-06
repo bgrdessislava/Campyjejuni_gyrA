@@ -22,7 +22,7 @@ long_list_revisited <- long_list %>%
 
 without_bootstrap = ggplot(aes(year, resistance_count), data = long_list_revisited) +
          geom_point(size = 5) +
-  ggtitle('A) Resistant isolates across time without bootstrapping') +
+  ggtitle('A) Resistant isolates without bootstrapping') +
   labs(y = "Resistant isolate count", x = "") +
   theme(plot.title = element_text(hjust = 0.5),panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(),panel.background = element_blank(), 

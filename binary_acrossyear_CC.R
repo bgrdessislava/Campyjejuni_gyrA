@@ -9,7 +9,7 @@ library(tidyverse)
 library(viridis)
 library(lme4)
 
-#Golden code - GLM model of fluoroquinolone resistance across time and statistical results
+#Golden code - GLM model of fluoroquinolone resistance acroåss time and statistical results
 setwd("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data")
 #Getting the raw big database with all metadata
 year_df<- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/CleanMeta_for_Tableau_resistantcleaned_10362.csv")
@@ -66,7 +66,7 @@ trend_group_1 = c('ST-464 complex')
 trend_group_2 = c('ST-354 complex','ST-353 complex')
 trend_group_3 = c('ST-443 complex','ST-52 complex')
 trend_group_4 = c('ST-21 complex','ST-574 complex',
-                  'ST-658 complex','ST-257 complex')
+                  'ST-658 complex','ST-257 complex','ST-403 complex')
 trend_group_5 = c('ST-45 complex','ST-61 complex',
                   'ST-42 complex','ST-22 complex',
                   'ST-283 complex')
@@ -82,6 +82,7 @@ year_df$trend_group = ifelse(year_df$clonal_complex %in% trend_group_1, 1,
                            ifelse(year_df$clonal_complex %in% trend_group_6, 6, 0)))
                                      
                                      )))
+
 
 year_df$trend_group = relevel(factor(year_df$trend_group), ref=3)
 table(year_df$trend_group)
@@ -149,6 +150,7 @@ trend_1 = ggplot(data = year_df%>% filter(trend_group == 1))  +
   scale_x_continuous(breaks=seq(1997, 2040, 5)) 
 
 trend_1 
+
 ggsave("../Figures/trend_1.png",dpi = 300)
 
 #I can also try to see the trend for each of the groups - group 2
@@ -212,7 +214,7 @@ trend_4 = ggplot(data = year_df%>% filter(trend_group == 4))  +
   geom_line(data = predicted_res, aes(x = year, y = predicted)) +
   geom_line(data=predicted_res, mapping=aes(x=year, y=upr), col="red") + 
   geom_line(data=predicted_res, mapping=aes(x=year, y=lwr), col="red") +
-  ggtitle('Group4 CC21,574,658,257')+
+  ggtitle('Group4 CC21,574,658,257,403')+
   ylab('Resistance') +
   xlab('') +
   theme(plot.title = element_text(hjust = 0.5)) +
@@ -356,27 +358,44 @@ mysmooth <- function(formula,data,...){
 
 unique_cc_heatmaps = c('ST-206 complex','ST-21 complex', 'ST-22 complex','','ST-257 complex','ST-283 complex',
                        'ST-353 complex', 'ST-354 complex', 'ST-42 complex','ST-443 complex','ST-45 complex',
-                       'ST-464 complex', 'ST-48 complex','ST-52 complex', 'ST-574 complex','ST-61 complex','ST-658 complex')
-year_df <- year_df %>% group_by(clonal_complex..MLST.) %>% filter(n() >= 10) 
-#a = filter(a, total >= 10)
+                       'ST-464 complex', 'ST-48 complex','ST-52 complex', 'ST-574 complex','ST-61 complex','ST-658 complex','ST-403 complex')
+unique_cc_heatmaps = c('ST-21 complex', 'ST-257 complex', 'ST-403 complex', 'ST-574 complex', 'ST-658 complex', 
+                       'ST-22 complex', 'ST-283 complex', 'ST-42 complex', 'ST-45 complex', 'ST-61 complex',
+                       'ST-206 complex', 'ST-48 complex',
+                       'ST-353 complex', 'ST-354 complex', 'ST-443 complex', 'ST-52 complex')
 
+unique_cc_heatmaps = c('ST-464 complex', 'ST-353 complex', 'ST-354 complex','ST-443 complex', 'ST-52 complex',
+                       'ST-21 complex', 'ST-257 complex', 'ST-403 complex', 'ST-574 complex', 'ST-658 complex', 
+                       'ST-22 complex', 'ST-283 complex', 'ST-42 complex', 'ST-45 complex', 'ST-61 complex',
+                       'ST-206 complex', 'ST-48 complex')
+                      
+year_df <- year_df %>% group_by(clonal_complex..MLST.) %>% filter(n() >= 1) %>%  filter(clonal_complex..MLST. != '')
+#a = filter(a, total >= 10)
+year_df$trend_group = factor(year_df$trend_group, levels=c("1", "2", "3", "4", "5", "6", "0"))
 year_df = filter(year_df, clonal_complex..MLST. %in% unique_cc_heatmaps)
+year_df$clonal_complex..MLST. = factor(
+  year_df$clonal_complex..MLST., 
+  levels=unique_cc_heatmaps)
 #CC overtime
-split_plot <- ggplot(aes(year_df$year, year_df$binary), data = year_df) + 
-    geom_point(alpha = 0.4) + 
-    geom_smooth(method = glm, method.args = c(family=binomial)) +
+split_plot <- ggplot(aes(year_df$year, year_df$binary, group=trend_group), data = year_df) + 
+    geom_point(alpha = 0.4, aes(colour=year_df$trend_group)) + 
+    geom_smooth(method = glm, method.args = c(family=binomial), aes(colour=year_df$trend_group)) +
     facet_wrap(~ year_df$clonal_complex..MLST.) + # create a facet for each mountain range
     xlab("Year") + 
     geom_vline(aes(xintercept = 2006),colour="red", linetype = "longdash") +
     ylab("Resistance") +
     xlim(1997,2018) +
     ylim(0,1) +
-    ggtitle("Fluoroquinolone Resistance over Clonal-complex") +
-    theme(plot.title = element_text(lineheight=.8, face="bold",hjust = 0.5))
+    theme(plot.title = element_text(hjust = 0.5, size = 15),panel.grid.major = element_blank(), 
+          axis.text.x = element_text(size = 8),
+          panel.grid.minor = element_blank(),panel.background = element_blank(), 
+          axis.line = element_line(colour = "black"),text = element_text(size = 12),
+          legend.key.size = unit(2, 'mm')) + 
+    labs(color ='Group') 
 
 split_plot
 
-ggsave("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Figures/Scatterplot/fluroquinoloneRes_CC_year_17graphs.png",plot=split_plot, width = 50, height = 30, units = "cm",dpi = 600)
+ggsave("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Figures/Scatterplot/fluroquinoloneRes_CC_year_17graphs_color.png",plot=split_plot, width = 20, height = 15, units = "cm",dpi = 600)
 
 #ST overtime
 split_plot_ST <- ggplot(aes(year_df$year, year_df$binary), data = year_df) + 

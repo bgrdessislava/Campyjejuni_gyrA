@@ -5,7 +5,7 @@ library(ggpubr)
 #This code does the bootstrapping that allowed me to choose same amount of samples across the years
 #Uses the binary list code to get the 1 and 0 binary regression but not neccesary worked.
 #It showed us that it is not binary
-
+setwd("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data")
 long_list <- read.csv("/Users/user/Documents/OneDrive - Nexus365/PhD/Campy_Analysis_ALL/Data/long_list.csv")
 long_list <- long_list[long_list$position == '86',]
 long_list$year_source = paste(long_list$year, long_list$source)
@@ -42,7 +42,7 @@ tmp <- long_list %>%
 
 proportion_resistance = ggplot(tmp, aes(fill=base, y=count, x=year)) +
   geom_bar(position='stack', stat='identity') +
-  ggtitle('B) Resistant and Suscpetible Isolate Count') +
+  ggtitle('B) Resistant and susceptible isolate count') +
   labs(y = "Count", x = "") +
   theme(plot.title = element_text(hjust = 0.5)) +
   scale_fill_discrete(name = "Fluoroquinolone Resistance", labels = c("Resistant", "Susceptible")) +
@@ -89,7 +89,7 @@ for (threshold in c(50,100)){
   human_graph <- ggplot(all_data2, aes(x = year, y = ID, alpha = 0.1)) + 
     geom_point() +
     geom_smooth(method='lm') +
-    labs(title="C) Percentage gyrA-ThR86Ile across time",
+    labs(title="C) Percentage gyrA-Thr86Ile isolates across time",
          x= "", y = "Percentage ") +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15)) +

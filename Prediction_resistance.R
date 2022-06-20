@@ -73,7 +73,7 @@ trend_total = ggplot(data = year_df)  +
   geom_line(data = predicted_res, aes(x = year, y = predicted)) +
   geom_line(data=predicted_res, mapping=aes(x=year, y=upr), col="red") + 
   geom_line(data=predicted_res, mapping=aes(x=year, y=lwr), col="red") +
-  ggtitle('D) Fluoroquinolone resistance prediction on isolates')+
+  ggtitle('D) Resistance prediction on isolates')+
   ylab('Proportion of resistance') + xlab('') +
   theme(plot.title = element_text(hjust = 0.5),panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(),panel.background = element_blank(), 

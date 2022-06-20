@@ -3,3 +3,16 @@ unzip *.zip
 
 #Slurm script that changes the amount of memory you can run
 #SBATCH --mem=5GB
+
+#github
+git status
+
+git add . 
+
+git commit -m 'messege you write'
+
+git push 
+
+
+
+

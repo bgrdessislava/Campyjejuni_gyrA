@@ -386,6 +386,7 @@ split_plot <- ggplot(aes(year_df$year, year_df$binary, group=trend_group), data 
     ylab("Resistance") +
     xlim(1997,2018) +
     ylim(0,1) +
+    scale_color_brewer(palette="Set1") +
     theme(plot.title = element_text(hjust = 0.5, size = 15),panel.grid.major = element_blank(), 
           axis.text.x = element_text(size = 8),
           panel.grid.minor = element_blank(),panel.background = element_blank(), 

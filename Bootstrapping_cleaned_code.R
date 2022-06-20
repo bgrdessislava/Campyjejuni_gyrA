@@ -89,7 +89,7 @@ for (threshold in c(50,100)){
   human_graph <- ggplot(all_data2, aes(x = year, y = ID, alpha = 0.1)) + 
     geom_point() +
     geom_smooth(method='lm') +
-    labs(title="C) Percentage gyrA-Thr86Ile isolates across time",
+    labs(title="C) Percentage gyrA-Thr86Ile across time",
          x= "", y = "Percentage ") +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15)) +

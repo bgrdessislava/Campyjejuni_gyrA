@@ -1,9 +1,9 @@
 
 ####Step 1 
-#connecting to the VPN
-ssh -X spet4850@arc-login.arc.ox.ac.uk
+#connecting to the VPN -- Pooh ! 290
+ssh spet4850@linux.ox.ac.uk
 
-#connecting to the cluster
+#connecting to the cluster Corona ------290  
 ssh -X spet4850@arc-login.arc.ox.ac.uk
 
 #Step 2 - Synching my files to ARC (do this from my computer)
@@ -18,6 +18,8 @@ rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' CC353_aligned_coreMLST_OdileAdvice_core.fas spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/CC353/
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' CC353_aligned_coreMLST_OdileAdvice_core-deduplicated.fasta.gz spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/CC353/
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' year_df_humanfecesONLY_ID.csv spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 13672_isolate_unaligned.fasta.gz spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/
+
 
 #Step 3 - Make a file using nano and print the Step 4 
 
@@ -32,7 +34,7 @@ rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --time=0-2:00:00
-#SBATCH --workdir=/data/zool-microbe-genomics/spet4850/campy_analysis/data/CC353
+#SBATCH --chdir=/data/zool-microbe-genomics/spet4850/campy_analysis/data
 #SBATCH --output=/data/zool-microbe-genomics/spet4850/campy_analysis/logs/fasttree_%j.out
 #SBATCH --error=/data/zool-microbe-genomics/spet4850/campy_analysis/logs/fasttree_%j.err
 #SBATCH --mail-type=ALL
@@ -43,6 +45,9 @@ module load slurm
 module load fasttree/2.1.9
 
 FastTreeMP -gtr -nt  < CC353_alignedto11168.fas > CC353_alignedto11168.fas.nwk
+
+FastTreeMP -gtr -nt  < 13672_isolates.fas > 13672_isolates.fas.nwk
+
 
 #Step 5 sbatch and run the job
 sbatch CC353_reference11168aligned_fasttree.slurm
@@ -57,6 +62,7 @@ sacct -j 541195 #CC353 coreMLST aligned - fasttree
 sacct -j 666264 #clonalframeML for CC353 on coreMLST
 sacct -j 651719 #re-running fasttree
 sacct -j 666267 #re-running the clonalframeML with coreMLST aligned
+sacct -j 2132188 #running 13672 alighnment mafft
 
 #Step 7 after submitted and wanting to take the files back into my computer [use this command in my computer]
 scp -r spet4850@gateway.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/ClonalFrameML2/ClonalFrameML/example.output.emsim.txt  /Users/user/Documents/HPC/clonalframe_example

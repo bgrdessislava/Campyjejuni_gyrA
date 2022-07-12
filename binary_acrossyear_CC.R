@@ -382,11 +382,11 @@ split_plot <- ggplot(aes(year_df$year, year_df$binary, group=trend_group), data 
     geom_smooth(method = glm, method.args = c(family=binomial), aes(colour=year_df$trend_group)) +
     facet_wrap(~ year_df$clonal_complex..MLST.) + # create a facet for each mountain range
     xlab("Year") + 
-    geom_vline(aes(xintercept = 2006),colour="red", linetype = "longdash") +
+    geom_vline(aes(xintercept = 2006),colour="black", linetype = "longdash") +
     ylab("Resistance") +
     xlim(1997,2018) +
     ylim(0,1) +
-    scale_color_brewer(palette="Set1") +
+    scale_color_brewer(palette="Dark2") +
     theme(plot.title = element_text(hjust = 0.5, size = 15),panel.grid.major = element_blank(), 
           axis.text.x = element_text(size = 8),
           panel.grid.minor = element_blank(),panel.background = element_blank(), 

@@ -35,7 +35,7 @@ split_plot <- ggplot(aes(combined_df$year, combined_df$binary), data = combined_
   geom_vline(aes(xintercept = 2006),colour="red", linetype = "longdash") +
   xlab("length") + 
   ylab("test score") +
-  ggtitle('NeighbourGroups and its fluoroquinolone resistance across time, at least 30 isolates per group ')+
+  ggtitle('NeighbourGroups and its fluoroquinolone resistance across time')+
   ylab('Fluoroquinolone resistance') +
   xlab('Year') +
   scale_x_continuous(breaks=seq(1997, 2018, 5)) +

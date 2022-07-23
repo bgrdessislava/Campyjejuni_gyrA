@@ -19,6 +19,9 @@ rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' CC353_aligned_coreMLST_OdileAdvice_core-deduplicated.fasta.gz spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/CC353/
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' year_df_humanfecesONLY_ID.csv spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 13672_isolate_unaligned.fasta.gz spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' CAMP*.xmfa.gz spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' newick_concatination.slurm spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' pairwise.py spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/
 
 
 #Step 3 - Make a file using nano and print the Step 4 
@@ -71,6 +74,7 @@ scp -r spet4850@gateway.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_
 scp -r spet4850@gateway.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/CC353/Aligned_11168_files  /Users/user/Documents/HPC/CC353_aligned_11168
 scp -r spet4850@gateway.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/CC353/Checking_CC353odile_coreMLST/odile_coreMLST_CC353.zip /Users/user/Documents/HPC
 scp -r spet4850@gateway.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/CC353/CC353_removedduplicate/removed_duplicated.zip /Users/user/Documents/HPC
+scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/MeanBranchLength.csv .
 
 
 

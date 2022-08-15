@@ -75,6 +75,9 @@ scp -r spet4850@gateway.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_
 scp -r spet4850@gateway.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/CC353/Checking_CC353odile_coreMLST/odile_coreMLST_CC353.zip /Users/user/Documents/HPC
 scp -r spet4850@gateway.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/CC353/CC353_removedduplicate/removed_duplicated.zip /Users/user/Documents/HPC
 scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/MeanBranchLength.csv .
+scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/Average_matrix.npy .
+scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/logs/pairwise_matrix_2203431.out tree_label.txt
+
 
 
 

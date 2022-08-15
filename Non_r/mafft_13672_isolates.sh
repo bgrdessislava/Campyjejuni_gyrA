@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --time=0-1:00:00
-#SBATCH --workdir=/data/zool-microbe-genomics/spet4850/campy_analysis/data/
+#SBATCH --chdir=/data/zool-microbe-genomics/spet4850/campy_analysis/data/
 #SBATCH --output=/data/zool-microbe-genomics/spet4850/campy_analysis/logs/mafft_%j.out
 #SBATCH --error=/data/zool-microbe-genomics/spet4850/campy_analysis/logs/mafft_%j.err
 #SBATCH --mail-type=ALL

@@ -16,3 +16,4 @@ git push
 
 
 
+for file in *cat.nwk; do sbatch newick_concatination.slurm $file; done

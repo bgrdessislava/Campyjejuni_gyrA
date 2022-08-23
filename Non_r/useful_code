@@ -17,3 +17,9 @@ git push
 
 
 for file in *cat.nwk; do sbatch newick_concatination.slurm $file; done
+
+
+git filter-branch --force --index-filter \
+  'git rm --cached --ignore-unmatch Non_r/matrix_res_comparison.pkl' \
+  --prune-empty --tag-name-filter cat -- --all
+  

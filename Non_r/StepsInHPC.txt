@@ -22,6 +22,10 @@ rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' CAMP*.xmfa.gz spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' newick_concatination.slurm spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' pairwise.py spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 10359_coreMLST_dataframe.txt spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' labelledData-allLoci.pkl spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 10359_Dataframe.xlsx spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost/NG_CheckClusterNumber
+
 
 
 #Step 3 - Make a file using nano and print the Step 4 
@@ -77,7 +81,10 @@ scp -r spet4850@gateway.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_
 scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/MeanBranchLength.csv .
 scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/13672_analysis/Average_matrix.npy .
 scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/logs/pairwise_matrix_2203431.out tree_label.txt
-
+scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost/Singular_double_merged.txt .
+scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost_20/combined_NG20_7MLST.txt .
+scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost_20/checkAllLoci/individual_loci_score_NG20.txt .
+scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost_20/checkAllLoci/allData.txt .
 
 
 

@@ -1,0 +1,7 @@
+ cat CAMP*-CAMP*.txt > allData.txt
+ 
+ bash runLociPairs.sh
+ 
+  cat CAMP*.txt > individual_loci_score.txt
+  
+  cat CAMP*.txt | grep -v '-' > individual_loci_score_NG20.txt

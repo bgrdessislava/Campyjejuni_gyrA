@@ -36,6 +36,9 @@ X_test = X_testAll[loci].copy().astype('category')
 model = CatBoostClassifier(verbose=0)
 model = model.fit(X_train, y_train, cat_features=list(X_train.columns))
 
+with open(f'{out}/{name}-trained.pkl', 'wb') as fh:
+	pickle.dump(model, fh)[÷]
+
 X_testAll['prediction'] = model.predict(X_test)
 X_testAll['predictionProb'] = model.predict_proba(X_test).max(axis=1)
 

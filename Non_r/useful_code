@@ -23,3 +23,13 @@ git filter-branch --force --index-filter \
   'git rm --cached --ignore-unmatch Non_r/matrix_res_comparison.pkl' \
   --prune-empty --tag-name-filter cat -- --all
   
+ #list conda environments 
+ conda info --envs
+ 
+conda activate /data/zool-microbe-genomics/spet4850/envs/py3
+
+ngroups test analysis/oxMLST  > adjustedRandScores.csv
+
+
+#how to run the for loop that is in the bash script 
+ bash trainFull_Loop.sh

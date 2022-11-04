@@ -25,6 +25,11 @@ rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 10359_coreMLST_dataframe.txt spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' labelledData-allLoci.pkl spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 10359_Dataframe.xlsx spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost/NG_CheckClusterNumber
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 10359_Dataframe.xlsx spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost/NG_CheckClusterNumber
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 10359_MLSTWholeGene_.csv spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/MLST_full_analysis/data/
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' *.nwk spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/Acinetobacter/analysis/
+rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 10359_coreMLST_metadata_MLST_combined.csv spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/coreMLST_random_analysis/
+
 
 
 
@@ -85,9 +90,10 @@ scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_a
 scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost_20/combined_NG20_7MLST.txt .
 scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost_20/checkAllLoci/individual_loci_score_NG20.txt .
 scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost_20/checkAllLoci/allData.txt .
+scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost_20/aspA-glnA-gltA-glyA-pgm-tkt-uncA-trained.pkl .
+scp spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost_35/NG_CheckClusterNumber/X_test_20.xlsx  .
 
-
-
+ X_train_20.xlsx
 
 
 #Good way to check the err file

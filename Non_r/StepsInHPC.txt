@@ -28,7 +28,18 @@ rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 10359_Dataframe.xlsx spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/data/NG_Catboost/NG_CheckClusterNumber
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 10359_MLSTWholeGene_.csv spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/MLST_full_analysis/data/
 rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' *.nwk spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/Acinetobacter/analysis/
-rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' 10359_coreMLST_metadata_MLST_combined.csv spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/coreMLST_random_analysis/
+id_vars = ['Ten_ID', 'Period_End_Date']
+summary = tenant_rentbalance.drop('New_Balance', axis=1).melt(id_vars=id_vars)
+summary['income'] = summary['value'] < 0
+summary['value'] = summary['value'].abs()
+summary = (
+    summary.groupby(['Ten_ID', 'Period_End_Date', 'income'])['value'].sum().reset_index()
+    .pivot(index=['Ten_ID', 'Period_End_Date'], columns='income', values='value')
+    .fillna(0)
+)
+sns.lineplot(
+    data=summary.reset_index().melt(id_vars=['Period_End_Date', 'Ten_ID']), 
+    x='Period_End_Date', y='value', hue="income")rsync --progress -arzv -e 'ssh -o "ProxyCommand ssh -A spet4850@linux.ox.ac.uk -W %h:%p"' submitJobs.txt spet4850@arc-login.arc.ox.ac.uk:/data/zool-microbe-genomics/spet4850/campy_analysis/coreMLST_random_analysis/
 
 
 
